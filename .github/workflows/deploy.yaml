@@ -1,29 +1,24 @@
 name: Deploy
-
-on:
+'on':
   push:
     paths:
-      - 'book/**'
-      - '{{ cookiecutter.repo_directory }}/**'
-      - 'scripts/**'
-      - '.github/workflows/deploy.yaml'
-      - '.github/actions/**'
-      - 'cookiecutter.yaml'
-
+    - book/**
+    - '{{ cookiecutter.repo_directory }}/**'
+    - scripts/**
+    - .github/workflows/deploy.yaml
+    - .github/actions/**
+    - cookiecutter.yaml
     branches:
-      - main
-
+    - main
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-20.04
-
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-
     - uses: ./.github/actions/buildresources
       with:
         jb-cache: false
         publish-to-gh: true
         jb-save: true
-        token:  ${{ secrets.GH_PAT }}
+        token: ${{ secrets.GH_PAT }}
